@@ -83,15 +83,15 @@ html{
 /* Animação da Nave voando da esquerda para a direita */
 @keyframes flyBy {
     0% {
-        left: -150px;
+        left: -180px;
         transform: scaleX(-1) translateY(-50%) scale(0.2);
     }
     40% {
-        left: 30%;
+        left: 10%;
         transform: scaleX(-1) translateY(-50%) scale(1);
     }
     100% {
-        left: 110%; /* Some pela direita */
+        left: 80%; /* Some pela direita */
         transform: scaleX(-1) translateY(-40%) scale(1.2); /* Aumenta simulando proximidade */
     }
 }
@@ -383,7 +383,7 @@ body{
 
     position:absolute;
 
-    bottom:150px;
+    bottom:190px;
 
     left:25px;
 
