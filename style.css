@@ -1,0 +1,1258 @@
+/* ===================================================
+   NOSSO CANTINHO
+   Desenvolvido com ❤️
+=================================================== */
+
+:root{
+
+    --pink:#ff72a8;
+    --pink-light:#ffd8ea;
+
+    --yellow:#ffe57a;
+    --yellow-light:#fff7cf;
+
+    --white:#ffffff;
+
+    --text:#555;
+
+    --shadow:0 15px 40px rgba(0,0,0,.15);
+
+    --radius:28px;
+
+}
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+/* ===================================================
+   EFEITO DE TRANSIÇÃO DA NAVE (STAR WARS)
+=================================================== */
+
+#ship-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 100000; /* Fica acima de absolutamente tudo */
+    pointer-events: none; /* Não atrapalha cliques antes de ser ativado */
+    display: none; /* Escondido por padrão */
+}
+
+/* Quando ativado pelo JS, exibe a transição */
+#ship-transition.active {
+    display: block;
+}
+
+/* A Nave */
+#ship-transition .spaceship {
+    position: absolute;
+    top: 50%;
+    left: -150px; /* Começa fora da tela à esquerda */
+    transform: scaleX(-1);
+    font-size: 80px; /* Se usar emoji */
+    filter: drop-shadow(0 0 15px #00d2ff); /* Brilho de propulsor azul */
+}
+
+/* Animação da nave cruzando a tela em alta velocidade */
+#ship-transition.active .spaceship {
+    animation: flyBy 1.2s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+}
+
+/* O flash de luz do Hiperespaço que cobre a tela */
+#ship-transition .hyperspace-flash {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+    opacity: 0;
+}
+
+/* O flash fica totalmente branco quando a nave passa, cobrindo o site antigo */
+#ship-transition.active .hyperspace-flash {
+    animation: flashScreen 1.2s ease-in-out forwards;
+}
+
+/* Animação da Nave voando da esquerda para a direita */
+@keyframes flyBy {
+    0% {
+        left: -150px;
+        transform: scaleX(-1) translateY(-50%) scale(0.2);
+    }
+    40% {
+        left: 30%;
+        transform: scaleX(-1) translateY(-50%) scale(1);
+    }
+    100% {
+        left: 110%; /* Some pela direita */
+        transform: scaleX(-1) translateY(-40%) scale(1.2); /* Aumenta simulando proximidade */
+    }
+}
+
+/* Animação do Flash cobrindo a tela */
+@keyframes flashScreen {
+    0% {
+        opacity: 0;
+    }
+    60% {
+        opacity: 0;
+        background: radial-gradient(circle, #ffffff 10%, #120c1f 100%);
+    }
+    85% {
+        opacity: 1; /* Tela fica totalmente branca neste pico */
+        background: #ffffff;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background: transparent;
+
+    overflow-x:hidden;
+
+}
+
+/* =========================
+    FUNDOS
+========================= */
+
+#background{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    z-index:-5;
+
+}
+
+#stars,
+#flowers,
+#hearts{
+
+    position:absolute;
+
+    inset:0;
+
+}
+
+/* =========================
+    ABERTURA
+========================= */
+
+#opening{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+    linear-gradient(
+        145deg,
+        var(--yellow),
+        var(--pink-light)
+    );
+
+    z-index:9999;
+
+    transition:1s;
+
+}
+
+.opening-content{
+
+    width:88%;
+
+    max-width:360px;
+
+    padding:35px;
+
+    text-align:center;
+
+    border-radius:35px;
+
+    background:
+
+    rgba(255,255,255,.55);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.opening-content p{
+
+    font-size:18px;
+
+    margin-bottom:25px;
+
+}
+
+/* =========================
+    ENVELOPE
+========================= */
+
+#envelope{
+
+    width:170px;
+
+    height:120px;
+
+    margin:25px auto;
+
+    position:relative;
+
+    cursor:pointer;
+
+}
+
+.cover{
+
+    position:absolute;
+
+    inset:0;
+
+    background:#ff8fba;
+
+    clip-path:polygon(
+        0 0,
+        100% 0,
+        50% 60%
+    );
+
+    z-index:2;
+
+}
+
+.paper{
+
+    position:absolute;
+
+    left:10px;
+    right:10px;
+
+    bottom:10px;
+
+    height:90px;
+
+    border-radius:10px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:42px;
+
+    transition:.6s;
+
+}
+
+#envelope:hover .paper{
+
+    transform:translateY(-25px);
+
+}
+
+#openLetter{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:999px;
+
+    padding:16px;
+
+    margin-top:15px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:white;
+
+    cursor:pointer;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #ff72a8,
+        #ffc857
+    );
+
+    transition:.35s;
+
+}
+
+#openLetter:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* =========================
+    APP
+========================= */
+
+#app{
+
+    display:none;
+
+}
+
+.section{
+
+    padding:45px 20px;
+
+}
+
+.section h2{
+
+    text-align:center;
+
+    color:var(--pink);
+
+    margin-bottom:25px;
+
+    font-size:30px;
+
+}
+
+/* =========================
+    HERO
+========================= */
+
+.hero{
+
+    position:relative;
+
+    height:100vh;
+
+}
+
+.hero-photo{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+    
+    opacity: 0.2;
+
+}
+
+.hero-gradient{
+
+    position:absolute;
+
+    inset:0;
+
+    background: transparent;
+
+}
+
+.hero-content{
+
+    position:absolute;
+
+    bottom:60px;
+
+    left:25px;
+
+    right:25px;
+
+    color:white;
+
+}
+
+.hero-content h1{
+
+    font-family:"Great Vibes";
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+.hero-content p{
+
+    font-size:18px;
+
+    line-height:1.8;
+
+}
+
+/* ===================================================
+   FUNDO DO CÉU ESTRELADO
+=================================================== */
+
+/* Garante que o container do fundo cubra toda a altura do site, não só a tela inicial */
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #120c1f 0%, #08040c 100%); /* Um azul escuro espacial bem profundo */
+    z-index: -2;
+    overflow: hidden;
+}
+
+/* Container onde o JavaScript vai jogar as estrelas */
+#stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilo individual de cada estrelinha */
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #ffffff, 0 0 8px #ffd4e5; /* Brilho suave puxado para o rosinha/amarelo */
+    opacity: 0;
+    animation: twinkle linear infinite;
+}
+
+/* Animação que faz as estrelas piscarem em tempos diferentes */
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+
+/* =========================
+    CONTADOR
+========================= */
+
+.counter{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+.counter-card{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.counter-card span{
+
+    display:block;
+
+    color:var(--pink);
+
+    font-size:34px;
+
+    font-weight:bold;
+
+}
+
+.counter-card small{
+
+    color:#888;
+
+}
+
+/* ===================================================
+   FRASE ROMÂNTICA
+=================================================== */
+
+.quote{
+
+    padding:70px 25px;
+
+    text-align:center;
+
+}
+
+.quote h2{
+
+    font-family:"Great Vibes",cursive;
+
+    font-size:48px;
+
+    color:var(--pink);
+
+    margin-bottom:20px;
+
+    line-height:1.2;
+
+}
+
+.quote p{
+
+    line-height:1.9;
+
+    font-size:17px;
+
+    color:#ffffff;
+
+}
+
+/* ===================================================
+   GALERIA ESTILO INSTAGRAM (Swipe com Snapping)
+=================================================== */
+
+.gallery-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    background-color: #000;
+}
+
+.gallery-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    
+    /* Configurações para efeito elástico/ímã (Snap) */
+    scroll-snap-type: x mandatory;
+    
+    /* Esconde barra de rolagem nativa */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+
+.gallery-track::-webkit-scrollbar {
+    display: none; /* Chrome e Safari */
+}
+
+.gallery-card {
+    min-width: 100%;
+    scroll-snap-align: center;
+    user-select: none;
+    cursor: grab;
+}
+
+.gallery-card:active {
+    cursor: grabbing;
+}
+
+.gallery-card img {
+    width: 100%;
+    aspect-ratio: 1/1; /* Garante fotos quadradas estilo Instagram */
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Pontinhos de indicação */
+.gallery-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 7px;
+    z-index: 5;
+    pointer-events: none; /* Evita que o clique interfira no swipe */
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transition: all 0.25s ease;
+}
+
+.dot.active {
+    background-color: #ffffff;
+    transform: scale(1.3);
+}
+
+/* ===================================================
+   LIGHTBOX
+=================================================== */
+
+#lightbox{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.9);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+
+}
+
+#lightbox img{
+
+    width:92%;
+
+    max-width:500px;
+
+    border-radius:25px;
+
+    animation:zoom .35s ease;
+
+}
+
+#closeLightbox{
+
+    position:absolute;
+
+    top:25px;
+
+    right:25px;
+
+    color:white;
+
+    font-size:34px;
+
+    cursor:pointer;
+
+}
+
+/* ===================================================
+   CARTINHAS
+=================================================== */
+
+.letters{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:22px;
+
+}
+
+.letter{
+
+    height:190px;
+
+    position:relative;
+
+    perspective:1200px;
+
+    cursor:pointer;
+
+}
+
+.letter-front,
+.letter-back{
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:25px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    padding:20px;
+
+    text-align:center;
+
+    backface-visibility:hidden;
+
+    transition:.8s;
+
+    box-shadow:var(--shadow);
+
+}
+
+.letter-front{
+
+    background:linear-gradient(
+        135deg,
+        #ffd7ea,
+        #fff4be
+    );
+
+    color:var(--pink);
+
+    font-size:26px;
+
+    font-weight:600;
+
+}
+
+.letter-front span{
+
+    margin-top:12px;
+
+    font-size:15px;
+
+}
+
+.letter-back{
+
+    background:linear-gradient(
+        135deg,
+        #ffdbec,
+        #ffffff
+    );
+
+    color:var(--pink);
+
+    transform:rotateY(180deg);
+
+    line-height:1.8;
+
+    font-size:17px;
+
+}
+
+.letter.open .letter-front{
+
+    transform:rotateY(180deg);
+
+}
+
+.letter.open .letter-back{
+
+    transform:rotateY(360deg);
+
+}
+
+/* ===================================================
+   TIMELINE
+=================================================== */
+
+.timeline{
+
+    position:relative;
+
+    padding-left:28px;
+
+}
+
+.timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:8px;
+
+    top:0;
+
+    bottom:0;
+
+    width:4px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        var(--pink),
+        var(--yellow)
+    );
+
+}
+
+.timeline-item{
+
+    position:relative;
+
+    margin-bottom:30px;
+
+}
+
+.timeline-dot{
+
+    width:18px;
+
+    height:18px;
+
+    background:var(--pink);
+
+    border-radius:50%;
+
+    position:absolute;
+
+    left:-28px;
+
+    top:18px;
+
+    border:4px solid white;
+
+}
+
+.timeline-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:18px;
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+}
+
+.timeline-card:hover{
+
+    transform:translateX(8px);
+
+}
+
+.timeline-card h3{
+
+    color:var(--pink);
+
+    margin-bottom:8px;
+
+}
+
+.timeline-card p{
+
+    color:#666;
+
+    line-height:1.7;
+
+}
+
+/* ===================================================
+   MOTIVOS
+=================================================== */
+
+.reasons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.reason{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    box-shadow:var(--shadow);
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.reason:hover{
+
+    transform:translateY(-5px);
+
+}
+
+/* ===================================================
+   PLAYER DE MÚSICA
+=================================================== */
+
+.music-section{
+
+    text-align:center;
+
+}
+
+.music-section p{
+
+    margin-bottom:20px;
+
+    color:#666;
+
+    line-height:1.8;
+
+}
+
+#musicButton{
+
+    border:none;
+
+    padding:16px 35px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        90deg,
+        var(--pink),
+        #ffb347
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    box-shadow:var(--shadow);
+
+}
+
+#musicButton:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* ===================================================
+   CARTA FINAL
+=================================================== */
+
+.love-letter{
+
+    margin:35px 20px;
+
+    padding:30px;
+
+    border-radius:30px;
+
+    background:linear-gradient(
+        135deg,
+        #ffdbec,
+        #ffffff
+    );
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.love-letter h4{
+
+    color:var(--pink);
+
+    text-align:left;
+
+    margin-bottom:25px;
+
+    font-family:"Great Vibes";
+
+    font-size:48px;
+
+}
+
+.love-letter p{
+
+    margin-bottom:18px;
+
+    line-height:1.9;
+
+    color:#666;
+
+}
+
+/* ===================================================
+   FOTO FINAL
+=================================================== */
+
+.final-photo{
+
+    padding:25px;
+
+    text-align:center;
+
+}
+
+.final-photo img{
+
+    width:100%;
+
+    border-radius:28px;
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ===================================================
+   FINAL
+=================================================== */
+
+.ending{
+
+    padding:70px 25px 100px;
+
+    text-align:center;
+
+}
+
+.ending h1{
+
+    font-family:"Great Vibes";
+
+    font-size:60px;
+
+    color:var(--pink);
+
+}
+
+.ending h2{
+
+    margin-top:15px;
+
+    color:#cecece;
+
+    font-size:24px;
+
+    font-weight:500;
+
+}
+
+#loveButton{
+
+    margin-top:40px;
+
+    border:none;
+
+    padding:18px 45px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        90deg,
+        #ff6fa8,
+        #ffc857
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    animation:pulse 2s infinite;
+
+    transition:.3s;
+
+    box-shadow:0 15px 35px rgba(255,111,168,.35);
+
+}
+
+#loveButton:hover{
+
+    transform:scale(1.08);
+
+}
+
+/* ===================================================
+   RODAPÉ
+=================================================== */
+
+footer{
+
+    padding:35px;
+
+    text-align:center;
+
+    color:#cecece;
+
+    font-size:15px;
+
+}
+
+/* ===================================================
+   PARTÍCULAS
+=================================================== */
+
+.heart{
+
+    position:fixed;
+
+    top:-40px;
+
+    pointer-events:none;
+
+    z-index:99999;
+
+    animation:fall linear forwards;
+
+}
+
+/* ===================================================
+   ANIMAÇÕES
+=================================================== */
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+@keyframes fall{
+
+    from{
+
+        transform:
+        translateY(-50px)
+        rotate(0deg);
+
+        opacity:1;
+
+    }
+
+    to{
+
+        transform:
+        translateY(120vh)
+        rotate(360deg);
+
+        opacity:0;
+
+    }
+
+}
+
+@keyframes zoom{
+
+    from{
+
+        transform:scale(.8);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===================================================
+   RESPONSIVIDADE
+=================================================== */
+
+@media(min-width:768px){
+
+    body{
+
+        display:flex;
+
+        justify-content:center;
+
+        background:transparent;
+
+    }
+
+#app{
+
+        width:430px;
+
+        /* Deixamos o container levemente translúcido para as estrelas aparecerem suavemente nas bordas */
+        background: rgba(18, 12, 31, 0.4); 
+        
+        backdrop-filter: blur(10px);
+
+        box-shadow: 0 0 50px rgba(0,0,0,.5);
+        
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+    }
+
+}
